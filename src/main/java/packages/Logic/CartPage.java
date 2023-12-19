@@ -7,6 +7,7 @@ public class CartPage extends BasePage {
     private final By REMOVE_BACKPACK_ID =By.id("remove-sauce-labs-backpack");
     private final By REMOVE_ONESIE_ID =By.id("remove-sauce-labs-onesie");
     private final By COUNT_ITEM_CLASS =By.className("shopping_cart_badge");
+
     public CartPage(WebDriver driver) {
         super(driver);
     }

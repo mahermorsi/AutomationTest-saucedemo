@@ -1,4 +1,5 @@
 package packages.Test;
+import com.sun.tools.javac.Main;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import packages.Infrastructure.Setup;
@@ -8,16 +9,12 @@ import static org.junit.Assert.assertEquals;
 
 public class CartTest {
     private static Setup newDriver = null;
-    private static MainPage mainPage = null;
-    private static CartPage cartPage = null;
     @BeforeEach
     public void beforeEach(){
         newDriver = new Setup();
         newDriver.setupDriver("chrome"); // get from configuration file
         newDriver.navigateToURL("https://www.saucedemo.com/"); // get from configuration file
         LoginPage loginPage = new LoginPage(newDriver.getDriver());
-        mainPage = new MainPage(newDriver.getDriver());
-        cartPage = new CartPage(newDriver.getDriver());
         loginPage.fullLoginProcess("standard_user","secret_sauce");
     }
 
@@ -26,11 +23,12 @@ public class CartTest {
         // ARRANGE
 
         // ACT
+        MainPage mainPage = new MainPage(newDriver.getDriver());
         mainPage.addBackPackToCart();
         mainPage.addBikeToCart();
         mainPage.addOneSieToCart();
         mainPage.navigateToCart();
-
+        CartPage cartPage = new CartPage(newDriver.getDriver());
         cartPage.removeOneSieCart();
         // ASSERT
         assertEquals(2,cartPage.getNumOfItemsInCart());
@@ -41,10 +39,11 @@ public class CartTest {
         // ARRANGE
 
         // ACT
+        MainPage mainPage = new MainPage(newDriver.getDriver());
         mainPage.addBackPackToCart();
         mainPage.addBikeToCart();
         mainPage.navigateToCart();
-
+        CartPage cartPage = new CartPage(newDriver.getDriver());
         // ASSERT
         assertEquals(2,cartPage.getNumOfItemsInCart());
     }
@@ -53,11 +52,12 @@ public class CartTest {
         // ARRANGE
 
         // ACT
+        MainPage mainPage = new MainPage(newDriver.getDriver());
         mainPage.addBackPackToCart();
         mainPage.addBikeToCart();
         mainPage.addOneSieToCart();
         mainPage.navigateToCart();
-
+        CartPage cartPage = new CartPage(newDriver.getDriver());
         cartPage.removeOneSieCart();
         cartPage.removeBackPackFromCart();
         // ASSERT
@@ -67,7 +67,6 @@ public class CartTest {
     @AfterEach
     public void tearDown(){
         newDriver.closeDriver();
-        mainPage = null;
-        cartPage= null;
+
     }
 }
